@@ -1,6 +1,5 @@
 package br.senac.sp.victor.testapplication;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -10,24 +9,26 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 
 import br.senac.sp.victor.R;
+import br.senac.sp.victor.util.Util;
 
+// Contempla até o ex. nro. 3
 public class TestActivity extends AppCompatActivity {
-    EditText txtNome;
-    EditText txtSobrenome;
-    Button btn;
-    RadioButton rbMasc;
-    RadioButton rbFem;
-    RadioButton rbCasado;
-    RadioButton rbSolteiro;
+    private EditText etNome;
+    private EditText etSobrenome;
+    private Button btnSaudar;
+    private RadioButton rbMasc;
+    private RadioButton rbFem;
+    private RadioButton rbCasado;
+    private RadioButton rbSolteiro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
-        txtNome = findViewById(R.id.etNome);
-        txtSobrenome = findViewById(R.id.etSobrenome);
-        btn = findViewById(R.id.btnSaudar);
+        etNome = findViewById(R.id.etNome);
+        etSobrenome = findViewById(R.id.etSobrenome);
+        btnSaudar = findViewById(R.id.btnSaudar);
         rbMasc = findViewById(R.id.rbMasc);
         rbFem = findViewById(R.id.rbFem);
         rbCasado = findViewById(R.id.rbCasado);
@@ -36,49 +37,38 @@ public class TestActivity extends AppCompatActivity {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nome = txtNome.getText().toString();
-                String sobrenome = txtSobrenome.getText().toString();
+                String nome = etNome.getText().toString();
+                String sobrenome = etSobrenome.getText().toString();
 
                 if (nome.trim().equals("")) {
-                    showDialog("Você precisa digitar um nome","Erro");
+                    Util.showDialog("Você precisa digitar um nome", "Atenção", TestActivity.this);
                     return;
                 }
 
                 if (sobrenome.trim().equals("")) {
-                    showDialog("Você precisa digitar um sobrenome","Erro");
+                    Util.showDialog("Você precisa digitar um sobrenome", "Atenção", TestActivity.this);
                     return;
                 }
 
                 if (!rbMasc.isChecked() && !rbFem.isChecked()) {
-                    showDialog( "Você precisa selecionar um sexo","Erro");
+                    Util.showDialog("Você precisa selecionar um sexo", "Atenção", TestActivity.this);
                     return;
                 }
 
                 if (!rbCasado.isChecked() && !rbSolteiro.isChecked()) {
-                    showDialog("Você precisa selecionar um estado civil","Erro");
+                    Util.showDialog("Você precisa selecionar um estado civil", "Atenção", TestActivity.this);
                     return;
                 }
                 String artigo = rbMasc.isChecked() ? "o" : "a";
                 String pronome = rbMasc.isChecked() ? "Sr." : "Sra.";
-
                 String estadoCivil = rbCasado.isChecked() ? "Casad" : "Solteir";
 
-                showDialog("Olá " + pronome + " " + nome + " " + sobrenome +
-                        ", "+artigo+" " + pronome.toLowerCase() + " é " + estadoCivil.toLowerCase() + artigo + ".","Bem-vind" + artigo);
-
+                Util.showDialog("Olá " + pronome + " " + nome + " " + sobrenome +
+                        ", " + artigo + " " + pronome.toLowerCase() + " é " + estadoCivil.toLowerCase() + artigo + ".", "Bem-vind" + artigo, TestActivity.this);
             }
         };
-        btn.setOnClickListener(listener);
+        btnSaudar.setOnClickListener(listener);
     }
 
-    private void showDialog(String message, String title) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(TestActivity.this);
-        builder.setMessage(message);
-        builder.setTitle(title);
-        builder.setCancelable(false);
-        builder.setPositiveButton("OK", null);
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
 
 }
