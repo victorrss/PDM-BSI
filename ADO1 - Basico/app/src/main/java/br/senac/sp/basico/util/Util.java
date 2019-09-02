@@ -1,4 +1,4 @@
-package br.senac.sp.victor.util;
+package br.senac.sp.basico.util;
 
 import android.app.AlertDialog;
 import android.content.Context;

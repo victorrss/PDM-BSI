@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".calculadoraEx05.CalculadoraEx05">
+
+    <Button
+            android:id="@+id/btnNum0"
+            android:layout_width="0dp"
+            android:layout_height="76dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="0"
+            android:textSize="36dp"
+            app:layout_constraintStart_toEndOf="@id/btnSeparadorDecimal"
+            app:layout_constraintTop_toBottomOf="@id/btnNum2" />
+
+    <Button
+            android:id="@+id/btnSeparadorDecimal"
+            android:layout_width="0dp"
+            android:layout_height="76dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="."
+            android:textSize="36sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnNum1" />
+
+    <Button
+            android:id="@+id/btnOpIgual"
+            android:layout_width="0dp"
+            android:layout_height="76dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="="
+            android:textSize="36sp"
+            app:layout_constraintStart_toEndOf="@+id/btnNum0"
+            app:layout_constraintTop_toBottomOf="@+id/btnNum3" />
+
+    <Button
+            android:id="@+id/btnOpAdicao"
+            android:layout_width="0dp"
+            android:layout_height="59dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="+"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnOpIgual"
+            app:layout_constraintTop_toBottomOf="@id/btnOpSubtracao" />
+
+    <Button
+            android:id="@+id/btnOpSubtracao"
+            android:layout_width="0dp"
+            android:layout_height="59dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="-"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnOpIgual"
+            app:layout_constraintTop_toBottomOf="@id/btnOpMultiplicacao" />
+
+    <Button
+            android:id="@+id/btnOpMultiplicacao"
+            android:layout_width="0dp"
+            android:layout_height="59dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="*"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnNum6"
+            app:layout_constraintTop_toBottomOf="@id/btnOpDivisao" />
+
+    <Button
+            android:id="@+id/btnNum3"
+            android:layout_width="0dp"
+            android:layout_height="76dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="3"
+            android:textSize="36sp"
+            app:layout_constraintStart_toEndOf="@+id/btnNum2"
+            app:layout_constraintTop_toBottomOf="@+id/btnNum6" />
+
+    <Button
+            android:id="@+id/btnNum2"
+            android:layout_width="0dp"
+            android:layout_height="76dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="2"
+            android:textSize="36dp"
+            app:layout_constraintStart_toEndOf="@id/btnNum1"
+            app:layout_constraintTop_toBottomOf="@id/btnNum5" />
+
+    <Button
+            android:id="@+id/btnNum1"
+            android:layout_width="0dp"
+            android:layout_height="76dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="1"
+            android:textSize="36sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnNum4" />
+
+    <Button
+            android:id="@+id/btnNum6"
+            android:layout_width="0dp"
+            android:layout_height="76dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="6"
+            android:textSize="36sp"
+            app:layout_constraintStart_toEndOf="@+id/btnNum5"
+            app:layout_constraintTop_toBottomOf="@+id/btnNum9" />
+
+    <Button
+            android:id="@+id/btnNum4"
+            android:layout_width="0dp"
+            android:layout_height="76dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="4"
+            android:textSize="36sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnNum7" />
+
+    <Button
+            android:id="@+id/btnNum5"
+            android:layout_width="0dp"
+            android:layout_height="76dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="5"
+            android:textSize="36dp"
+            app:layout_constraintStart_toEndOf="@id/btnNum4"
+            app:layout_constraintTop_toBottomOf="@id/btnNum8" />
+
+    <Button
+            android:id="@+id/btnOpDivisao"
+            android:layout_width="0dp"
+            android:layout_height="59dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="/"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnNum6"
+            app:layout_constraintTop_toBottomOf="@id/btnDelete" />
+
+    <EditText
+            android:id="@+id/etVisor"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:ems="10"
+            android:enabled="false"
+            android:inputType="numberDecimal"
+            android:text="0"
+            android:textAlignment="textEnd"
+            android:textSize="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+            android:id="@+id/btnNum9"
+            android:layout_width="0dp"
+            android:layout_height="76dp"
+            android:layout_marginStart="8dp"
+            android:text="9"
+            android:textSize="36sp"
+            app:layout_constraintStart_toEndOf="@+id/btnNum8"
+            app:layout_constraintTop_toBottomOf="@+id/etVisor" />
+
+    <Button
+            android:id="@+id/btnNum7"
+            android:layout_width="0dp"
+            android:layout_height="76dp"
+            android:layout_marginStart="16dp"
+            android:text="7"
+            android:textSize="36sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etVisor" />
+
+    <Button
+            android:id="@+id/btnNum8"
+            android:layout_width="0dp"
+            android:layout_height="76dp"
+            android:layout_marginStart="8dp"
+            android:text="8"
+            android:textSize="36dp"
+            app:layout_constraintStart_toEndOf="@+id/btnNum7"
+            app:layout_constraintTop_toBottomOf="@+id/etVisor" />
+
+    <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="0dp"
+            android:layout_height="59dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="DEL"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnNum9"
+            app:layout_constraintTop_toBottomOf="@+id/etVisor" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

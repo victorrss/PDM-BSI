@@ -1,4 +1,4 @@
-package br.senac.sp.victor.checkbox;
+package br.senac.sp.basico.checkbox;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,8 +9,8 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
-import br.senac.sp.victor.R;
-import br.senac.sp.victor.util.Util;
+import br.senac.sp.basico.util.Util;
+import br.senac.sp.basico.R;
 
 public class CheckboxActivity extends AppCompatActivity {
     private EditText etNome;

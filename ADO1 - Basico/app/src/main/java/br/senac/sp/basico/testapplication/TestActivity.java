@@ -1,4 +1,4 @@
-package br.senac.sp.victor.testapplication;
+package br.senac.sp.basico.testapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,8 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
-import br.senac.sp.victor.R;
-import br.senac.sp.victor.util.Util;
+import br.senac.sp.basico.R;
+import br.senac.sp.basico.util.Util;
 
 // Contempla até o ex. nro. 3
 public class TestActivity extends AppCompatActivity {

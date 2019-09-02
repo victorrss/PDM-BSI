@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        package="br.senac.sp.victor">
+        package="br.senac.sp.basico">
 
     <application
             android:allowBackup="true"
@@ -9,29 +9,24 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".checkbox.CheckboxActivity">
+        <activity android:name=".calculadoraEx05.CalculadoraEx05">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".calculadora.CalculadoraActivity">
+        <activity android:name=".spinnerEx04.SpinnerEx04">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-                android:name=".testapplication.TestActivity"
-                android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".spinnerEx03.SpinnerEx03" />
+        <activity android:name=".checkbox.CheckboxActivity" />
+        <activity android:name=".calculadora.CalculadoraActivity" />
+        <activity android:name=".testapplication.TestActivity" />
     </application>
 
 </manifest>

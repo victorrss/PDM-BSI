@@ -1,6 +1,5 @@
-package br.senac.sp.victor.calculadora;
+package br.senac.sp.basico.calculadora;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -12,8 +11,8 @@ import android.widget.TextView;
 
 import java.text.DecimalFormat;
 
-import br.senac.sp.victor.R;
-import br.senac.sp.victor.util.Util;
+import br.senac.sp.basico.util.Util;
+import br.senac.sp.basico.R;
 
 public class CalculadoraActivity extends AppCompatActivity {
     private EditText etValor1;
