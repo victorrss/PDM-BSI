@@ -51,7 +51,7 @@ public class ViaCEPActivity extends AppCompatActivity {
 
 
                 Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://viacep.com.br/ws/")
+                        .baseUrl("http://viacep.com.br/")
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
 

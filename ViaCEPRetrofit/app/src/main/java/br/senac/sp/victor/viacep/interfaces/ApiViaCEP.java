@@ -7,6 +7,6 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiViaCEP {
-    @GET("/{cep}/json")
+    @GET("/ws/{cep}/json")
     Call<ViaCEP> getCEP(@Path(value= "cep", encoded = true) String cep);
 }
