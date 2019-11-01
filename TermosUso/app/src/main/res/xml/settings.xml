@@ -1,0 +1,9 @@
+<PreferenceScreen
+    xmlns:android=
+        "http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="btn_secreto"
+        android:summary="Vai mostrar o botão secreto na tela principal"
+        android:title="Habilitar botão secreto do app?" />
+</PreferenceScreen>

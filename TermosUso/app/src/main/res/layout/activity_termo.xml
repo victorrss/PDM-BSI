@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TermoActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Estes “Termos e Condições de Uso do Aplicativo” (“TC”)é um acordo legal entre o licenciado (pessoa física ou jurídica) (o “LICENCIADO”) e a SIMPLEST SOFTWARE LTDA ME, pessoa jurídica de direito privado, inscrita no CNPJ/MF sob o nº 12.496.510/0001-80, com sede na cidade de Joinville, Estado de Santa Catarina, na Av. Rolf Wiest 277, Auri Plaza Garten (7º andar), Bairro Bom Retiro, CEP: 89.223-005, doravante denominada simplesmente “MERCOS”, única e exclusiva proprietária do Portal com foco em disponibilização de um Sistema de Pedidos e Catálogo Digital (ora em diante simplesmente “Aplicativo”), das marcas, nomes e do domínio associado à marca MERCOS. SIMPLEST SOFTWARE LTDA ME, sociedade limitada, inscrita no CNPJ/MF sob nº. 12.496.510/000180, com sede na Av. Rolf Wiest 277, Auri Plaza Garten (7º andar), Bairro Bom Retiro, na cidade de Joinville, Estado de Santa Catarina, CEP: 89.223-005,"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnAceito"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Eu aceito"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+</androidx.constraintlayout.widget.ConstraintLayout>
