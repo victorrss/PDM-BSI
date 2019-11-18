@@ -2,7 +2,9 @@ package br.senac.sp.amicao.ui;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -12,11 +14,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 
 import br.senac.sp.amicao.R;
+import br.senac.sp.amicao.util.Util;
 
 public class MainActivity extends AppCompatActivity {
     private NavigationView navView;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
+    private ProductListFragment f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +30,12 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawer);
         navView = findViewById(R.id.navigation_view);
 
-        ProductListFragment f = new ProductListFragment();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frag_container, f).commit();
+        f = new ProductListFragment();
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frag_container, f)
+                .commit();
         navView.setCheckedItem(R.id.action_product_list);
 
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -49,6 +56,11 @@ public class MainActivity extends AppCompatActivity {
                         ProductListFragment f = new ProductListFragment();
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.frag_container, f).commit();
+                        return true;
+                    case R.id.action_category_list:
+                        CategoryListFragment c = new CategoryListFragment();
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.frag_container, c).commit();
                         return true;
                 }
                 return false;
@@ -77,8 +89,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Carrega o menu
-        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
+        // Carrega o menu]
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_toolbar, menu);
+
+        //Pega o Componente.
+        SearchView mSearchView = (SearchView) menu.findItem(R.id.search_view).getActionView();
+
+        // exemplos de utilização:
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Util.searchTerm = query;
+                f.callApis();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        mSearchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                Util.searchTerm = null;
+                f.callApis();
+                return false;
+            }
+        });
         return true;
     }
 

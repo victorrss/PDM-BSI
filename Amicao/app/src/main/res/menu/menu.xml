@@ -8,6 +8,11 @@
             android:checked="false"
             android:icon="@drawable/ic_view_list_foreground"
             android:title="Produtos" />
+        <item
+            android:id="@+id/action_category_list"
+            android:checked="false"
+            android:icon="@drawable/ic_view_list_foreground"
+            android:title="Categorias" />
     </group>
 
 </menu>

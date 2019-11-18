@@ -1,13 +1,16 @@
 package br.senac.sp.amicao.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,7 +22,9 @@ import java.util.List;
 import java.util.Locale;
 
 import br.senac.sp.amicao.R;
+import br.senac.sp.amicao.api.ApiCategory;
 import br.senac.sp.amicao.api.ApiProduct;
+import br.senac.sp.amicao.model.Category;
 import br.senac.sp.amicao.model.Product;
 import br.senac.sp.amicao.util.Util;
 import retrofit2.Call;
@@ -29,9 +34,16 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProductListFragment extends Fragment {
-    private ViewGroup mainLayout;
+    private static String searchTerm;
+    private static Integer categoryId;
 
-    public ProductListFragment() { }
+    private ViewGroup mainLayout;
+    private ConstraintLayout layoutFilter;
+    private TextView tvFilterCategory;
+    private Button btnFilterClear;
+
+    public ProductListFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -39,15 +51,62 @@ public class ProductListFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_product_list, container, false);
-        mainLayout = view.findViewById(R.id.mainLayout);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Util.URL_API)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        mainLayout = view.findViewById(R.id.productListMainLayout);
+        layoutFilter = view.findViewById(R.id.layoutFilter);
+        tvFilterCategory = view.findViewById(R.id.tvFilterCategory);
+        btnFilterClear = view.findViewById(R.id.btnFilterClear);
 
-        ApiProduct api = retrofit.create(ApiProduct.class);
-        Call<List<Product>> call = api.getAll();
+        callApis();
+        // Inflate the layout for this fragment
+        return view;
+    }
+
+    private void addCard(String title, String msg, final int id) {
+        final CardView cardview = (CardView) LayoutInflater.from(getActivity()).inflate(R.layout.cardview_product, mainLayout, false);
+
+        TextView txtTitle = cardview.findViewById(R.id.txtNome);
+        TextView txtMsg = cardview.findViewById(R.id.txtPreco);
+
+        txtTitle.setText(title);
+        txtMsg.setText(msg);
+
+        String url = Util.URL_API + "android/rest/produto/image/" + id;
+        ImageView imageView = cardview.findViewById(R.id.ivImage);
+        ImageLoader imagemLoader = ImageLoader.getInstance();
+        imagemLoader.init(Util.getImageLoaderConfig(getActivity().getApplicationContext()));
+        imagemLoader.displayImage(url, imageView);
+
+        cardview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), ProductDetailActivity.class);
+                i.putExtra("id", id);
+                startActivityForResult(i, 1);
+            }
+        });
+
+        mainLayout.addView(cardview);
+    }
+
+    public void callApis() {
+        this.searchTerm = Util.searchTerm;
+        this.categoryId = Util.categoryId;
+        mainLayout.removeAllViews();
+
+        ApiProduct api = Util.getRetrofit().create(ApiProduct.class);
+
+        Call<List<Product>> call = null;
+
+        if (searchTerm == null && categoryId == null) { // TODOS OS PRODUTOS
+            call = api.getAll();
+        } else if (searchTerm == null && categoryId != null) { // SOMENTE POR CATEGORIA
+            call = api.getByCategory(this.categoryId);
+        } else if (searchTerm != null && categoryId == null) { // SOMENTE PELO NOME
+            call = api.getByName(this.searchTerm);
+        } else if (searchTerm != null && categoryId != null) { // PELO NOME E CATEGORIA
+            call = api.getByNameAndCategoryId(this.searchTerm, this.categoryId);
+        }
 
         call.enqueue(new Callback<List<Product>>() {
             @Override
@@ -61,36 +120,48 @@ public class ProductListFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
-                Util.showDialog("Erro de Conexão", "Erro", getContext());
+                Util.showDialog("Erro de Conexão", "Erro", getActivity().getApplicationContext());
                 t.printStackTrace();
             }
         });
 
-        // Inflate the layout for this fragment
-        return view;
-    }
 
-    private void addCard(String title, String msg, int id) {
-        /*
-            System.out.println("Titulo: " + title);
-            System.out.println("Mensagem: " + msg);
-            System.out.println("Id: " + id);
-        */
+        // view FILTER
 
-        final CardView cardview = (CardView) LayoutInflater.from(getActivity()).inflate(R.layout.cardview_product, mainLayout, false);
 
-        TextView txtTitle = cardview.findViewById(R.id.txtNome);
-        TextView txtMsg = cardview.findViewById(R.id.txtPreco);
+        if (categoryId == null)
+            layoutFilter.setVisibility(View.GONE);
+        else {
+            ApiCategory apiCategory = Util.getRetrofit().create(ApiCategory.class);
 
-        txtTitle.setText(title);
-        txtMsg.setText(msg);
+            Call<List<Category>> callCategory = apiCategory.getAll();
 
-        String url = Util.URL_API + "android/rest/produto/image/" + id;
-        ImageView imageView = cardview.findViewById(R.id.image);
-        ImageLoader imagemLoader = ImageLoader.getInstance();
-        imagemLoader.init(ImageLoaderConfiguration.createDefault(getContext()));
-        imagemLoader.displayImage(url, imageView);
+            callCategory.enqueue(new Callback<List<Category>>() {
+                @Override
+                public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
+                    List<Category> categories = response.body();
+                    for (Category category : categories)
+                        if (category.getIdCategoria() == categoryId)
+                            tvFilterCategory.setText(category.getNomeCategoria());
+                }
 
-        mainLayout.addView(cardview);
+                @Override
+                public void onFailure(Call<List<Category>> call, Throwable t) {
+                    Util.showDialog("Erro de Conexão", "Erro", getActivity().getApplicationContext());
+                    t.printStackTrace();
+                }
+            });
+        }
+
+        btnFilterClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Util.categoryId = null;
+                categoryId = null;
+                layoutFilter.setVisibility(View.GONE);
+                callApis();
+            }
+        });
+
     }
 }

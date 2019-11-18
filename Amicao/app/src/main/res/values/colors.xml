@@ -9,4 +9,6 @@
     <color name="colorPrimaryText">#ffffff</color>
     <color name="colorSecondaryText">#000000</color>
     <color name="colorAccent">#66cc66</color>
+    <color name="colorEnabled">#66CC66</color>
+    <color name="colorDisabled">#FF0000</color>
 </resources>
