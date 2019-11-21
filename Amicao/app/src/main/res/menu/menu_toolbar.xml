@@ -10,6 +10,8 @@
         app:actionViewClass="android.widget.SearchView"
         app:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/action_product_list"
-        android:title="Configurações" />
+        android:id="@+id/action_filter_category"
+        android:icon="@drawable/ic_filter_list_24px"
+        android:title="Filtro de categoria"
+        app:showAsAction="ifRoom" />
 </menu> 

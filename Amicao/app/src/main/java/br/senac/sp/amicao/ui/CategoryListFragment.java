@@ -62,7 +62,7 @@ public class CategoryListFragment extends Fragment {
     }
 
     private void addCard(String title, final Integer id) {
-        final CardView cardview = (CardView) LayoutInflater.from(getActivity()).inflate(R.layout.cardview_category, mainLayout, false);
+        CardView cardview = (CardView) LayoutInflater.from(getContext()).inflate(R.layout.cardview_category, mainLayout, false);
 
         TextView txtTitle = cardview.findViewById(R.id.txtNome);
         txtTitle.setText(title);

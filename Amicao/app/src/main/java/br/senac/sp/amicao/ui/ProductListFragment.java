@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -49,6 +50,7 @@ public class ProductListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
 
         View view = inflater.inflate(R.layout.fragment_product_list, container, false);
 
@@ -56,43 +58,55 @@ public class ProductListFragment extends Fragment {
         layoutFilter = view.findViewById(R.id.layoutFilter);
         tvFilterCategory = view.findViewById(R.id.tvFilterCategory);
         btnFilterClear = view.findViewById(R.id.btnFilterClear);
-
+        SearchView searchView =view.findViewById(R.id.search_view);
         callApis();
+
+        if (searchTerm != null){
+            CharSequence cs = searchTerm;
+            searchView.setQuery(cs, false);
+        }
+
         // Inflate the layout for this fragment
         return view;
     }
 
     private void addCard(String title, String msg, final int id) {
-        final CardView cardview = (CardView) LayoutInflater.from(getActivity()).inflate(R.layout.cardview_product, mainLayout, false);
+        try {
+            CardView cardview = (CardView) LayoutInflater.from(getContext()).inflate(R.layout.cardview_product, mainLayout, false);
 
-        TextView txtTitle = cardview.findViewById(R.id.txtNome);
-        TextView txtMsg = cardview.findViewById(R.id.txtPreco);
+            TextView txtTitle = cardview.findViewById(R.id.txtNome);
+            TextView txtMsg = cardview.findViewById(R.id.txtPreco);
 
-        txtTitle.setText(title);
-        txtMsg.setText(msg);
+            txtTitle.setText(title == null ? "" : title);
+            txtMsg.setText(msg == null ? "" : msg);
 
-        String url = Util.URL_API + "android/rest/produto/image/" + id;
-        ImageView imageView = cardview.findViewById(R.id.ivImage);
-        ImageLoader imagemLoader = ImageLoader.getInstance();
-        imagemLoader.init(Util.getImageLoaderConfig(getActivity().getApplicationContext()));
-        imagemLoader.displayImage(url, imageView);
+            String url = Util.URL_API + "android/rest/produto/image/" + id;
+            ImageView imageView = cardview.findViewById(R.id.ivImage);
+            ImageLoader imagemLoader = ImageLoader.getInstance();
+            imagemLoader.init(Util.getImageLoaderConfig(getActivity().getApplicationContext()));
+            imagemLoader.displayImage(url, imageView);
 
-        cardview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), ProductDetailActivity.class);
-                i.putExtra("id", id);
-                startActivityForResult(i, 1);
-            }
-        });
+            cardview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(getActivity().getApplicationContext(), ProductDetailActivity.class);
+                    i.putExtra("id", id);
+                    startActivityForResult(i, 1);
+                }
+            });
 
-        mainLayout.addView(cardview);
+            mainLayout.addView(cardview);
+        } catch (Exception e){
+            //e.printStackTrace();
+        }
+
     }
 
     public void callApis() {
         this.searchTerm = Util.searchTerm;
         this.categoryId = Util.categoryId;
         mainLayout.removeAllViews();
+
 
         ApiProduct api = Util.getRetrofit().create(ApiProduct.class);
 

@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.frag_container, f)
+                .replace(R.id.frag_container, f, ProductListFragment.class.getName())
                 .commit();
         navView.setCheckedItem(R.id.action_product_list);
 
@@ -57,11 +58,6 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.frag_container, f).commit();
                         return true;
-                    case R.id.action_category_list:
-                        CategoryListFragment c = new CategoryListFragment();
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.frag_container, c).commit();
-                        return true;
                 }
                 return false;
 
@@ -78,13 +74,14 @@ public class MainActivity extends AppCompatActivity {
 
         if (actionBarDrawerToggle.onOptionsItemSelected(item))
             return true;
-        /*
-        else if (item.getItemId() == R.id.action_config) {
-            Intent intent = new Intent(MainActivity.this, ConfiguracaoActivity.class);
-            startActivity(intent);
+
+        else if (item.getItemId() == R.id.action_filter_category) {
+            CategoryListFragment c = new CategoryListFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frag_container, c).commit();
             return true;
         }
-         */
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -93,6 +90,11 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_toolbar, menu);
 
+        ProductListFragment nomeFragment = (ProductListFragment) getSupportFragmentManager()
+                .findFragmentByTag(ProductListFragment.class.getName());
+        if (nomeFragment != null && !nomeFragment.isVisible()) {
+            menu.removeItem(R.id.action_filter_category);
+        }
         //Pega o Componente.
         SearchView mSearchView = (SearchView) menu.findItem(R.id.search_view).getActionView();
 
