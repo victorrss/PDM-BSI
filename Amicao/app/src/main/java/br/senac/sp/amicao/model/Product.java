@@ -10,6 +10,13 @@ public class Product {
     private int idProduto;
     private double descontoPromocao;
 
+    public Product(int idProduto) {
+        this.idProduto = idProduto;
+    }
+
+    public Product() {
+    }
+
     public String getNomeProduto() {
         return nomeProduto;
     }

@@ -14,6 +14,9 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -21,6 +24,18 @@ public final class Util {
     public static String URL_API = "https://oficinacordova.azurewebsites.net/";
     public static String searchTerm = null;
     public static Integer categoryId = null;
+
+    public static Integer toInteger(String s) {
+        try {
+            return Integer.parseInt(s);
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    public static String formatBRLValue(Double d){
+        return NumberFormat.getCurrencyInstance(new Locale("pt", "BR")).format(d);
+    }
 
     public static void showDialog(String val, String title, Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -32,7 +47,7 @@ public final class Util {
         dialog.show();
     }
 
-    public  static ImageLoaderConfiguration getImageLoaderConfig(Context context) {
+    public static ImageLoaderConfiguration getImageLoaderConfig(Context context) {
         return new ImageLoaderConfiguration.Builder(context)
                 .memoryCacheExtraOptions(480, 800) // default = device screen dimensions
                 .diskCacheExtraOptions(480, 800, null)
@@ -52,7 +67,7 @@ public final class Util {
                 .build();
     }
 
-    public static Retrofit getRetrofit(){
+    public static Retrofit getRetrofit() {
         return new Retrofit.Builder()
                 .baseUrl(Util.URL_API)
                 .addConverterFactory(GsonConverterFactory.create())

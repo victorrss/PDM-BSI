@@ -1,5 +1,6 @@
 package br.senac.sp.amicao.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -57,6 +58,10 @@ public class MainActivity extends AppCompatActivity {
                         ProductListFragment f = new ProductListFragment();
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.frag_container, f).commit();
+                        return true;
+                    case R.id.action_cart:
+                        Intent i = new Intent(getApplicationContext(), CartActivity.class);
+                        startActivity(i);
                         return true;
                 }
                 return false;

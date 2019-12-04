@@ -16,7 +16,6 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -25,14 +24,14 @@ import java.util.Locale;
 import br.senac.sp.amicao.R;
 import br.senac.sp.amicao.api.ApiCategory;
 import br.senac.sp.amicao.api.ApiProduct;
+import br.senac.sp.amicao.model.Cart;
 import br.senac.sp.amicao.model.Category;
+import br.senac.sp.amicao.model.ItemCart;
 import br.senac.sp.amicao.model.Product;
 import br.senac.sp.amicao.util.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProductListFragment extends Fragment {
     private static String searchTerm;
@@ -56,9 +55,11 @@ public class ProductListFragment extends Fragment {
 
         mainLayout = view.findViewById(R.id.productListMainLayout);
         layoutFilter = view.findViewById(R.id.layoutFilter);
-        tvFilterCategory = view.findViewById(R.id.tvFilterCategory);
-        btnFilterClear = view.findViewById(R.id.btnFilterClear);
+        tvFilterCategory = view.findViewById(R.id.tvTotalPrice);
+        btnFilterClear = view.findViewById(R.id.btnFinalize);
+
         SearchView searchView =view.findViewById(R.id.search_view);
+
         callApis();
 
         if (searchTerm != null){
@@ -70,17 +71,19 @@ public class ProductListFragment extends Fragment {
         return view;
     }
 
-    private void addCard(String title, String msg, final int id) {
+    private void addCard(final Product p) {
+        String formatValue = NumberFormat.getCurrencyInstance(new Locale("pt", "BR")).format(p.getPrecProduto());
         try {
             CardView cardview = (CardView) LayoutInflater.from(getContext()).inflate(R.layout.cardview_product, mainLayout, false);
 
             TextView txtTitle = cardview.findViewById(R.id.txtNome);
             TextView txtMsg = cardview.findViewById(R.id.txtPreco);
+            ImageView btnAddCart = cardview.findViewById(R.id.btnAddCart);
 
-            txtTitle.setText(title == null ? "" : title);
-            txtMsg.setText(msg == null ? "" : msg);
+            txtTitle.setText(p.getNomeProduto() == null ? "" : p.getNomeProduto());
+            txtMsg.setText(formatValue == null ? "" : formatValue);
 
-            String url = Util.URL_API + "android/rest/produto/image/" + id;
+            String url = Util.URL_API + "android/rest/produto/image/" + p.getIdProduto();
             ImageView imageView = cardview.findViewById(R.id.ivImage);
             ImageLoader imagemLoader = ImageLoader.getInstance();
             imagemLoader.init(Util.getImageLoaderConfig(getActivity().getApplicationContext()));
@@ -90,10 +93,24 @@ public class ProductListFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(getActivity().getApplicationContext(), ProductDetailActivity.class);
-                    i.putExtra("id", id);
+                    i.putExtra("id", p.getIdProduto());
                     startActivityForResult(i, 1);
                 }
             });
+
+
+            btnAddCart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        Cart.getInstance().add(new ItemCart(p));
+                        Util.showDialog("Produto adicionado com sucesso","Hurra!",getContext());
+                    } catch (Exception e){
+                        Util.showDialog(e.getMessage(),"Ops!",getContext());
+                    }
+                }
+            });
+
 
             mainLayout.addView(cardview);
         } catch (Exception e){
@@ -127,14 +144,13 @@ public class ProductListFragment extends Fragment {
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 List<Product> list = response.body();
                 for (Product product : list) {
-                    String formatValue = NumberFormat.getCurrencyInstance(new Locale("pt", "BR")).format(product.getPrecProduto());
-                    addCard(product.getNomeProduto(), formatValue, product.getIdProduto());
+                    addCard(product);
                 }
             }
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
-                Util.showDialog("Erro de Conexão", "Erro", getActivity().getApplicationContext());
+                Util.showDialog("Erro de Conexão", "Erro", getContext());
                 t.printStackTrace();
             }
         });
@@ -177,5 +193,5 @@ public class ProductListFragment extends Fragment {
             }
         });
 
-    }
+           }
 }
