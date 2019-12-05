@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView navView;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
-    private ProductListFragment f;
+    private static ProductListFragment f;
 
     @Override
     protected void onResume(){
@@ -127,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
         if (nomeFragment != null && !nomeFragment.isVisible()) {
             menu.removeItem(R.id.action_filter_category);
         }
+        /*
         //Pega o Componente.
         SearchView mSearchView = (SearchView) menu.findItem(R.id.search_view).getActionView();
 
@@ -152,6 +153,8 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+         */
         return true;
     }
 

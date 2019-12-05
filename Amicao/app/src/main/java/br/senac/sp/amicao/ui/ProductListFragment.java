@@ -42,9 +42,6 @@ public class ProductListFragment extends Fragment {
     private TextView tvFilterCategory;
     private Button btnFilterClear;
 
-    public ProductListFragment() {
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
@@ -58,14 +55,16 @@ public class ProductListFragment extends Fragment {
         tvFilterCategory = view.findViewById(R.id.tvTitle);
         btnFilterClear = view.findViewById(R.id.btnFinalize);
 
-        SearchView searchView =view.findViewById(R.id.search_view);
-
         callApis();
+        /*
+        SearchView searchView =view.findViewById(R.id.search_view);
 
         if (searchTerm != null){
             CharSequence cs = searchTerm;
             searchView.setQuery(cs, false);
         }
+
+         */
 
         // Inflate the layout for this fragment
         return view;
@@ -74,7 +73,7 @@ public class ProductListFragment extends Fragment {
     private void addCard(final Product p) {
         String formatValue = NumberFormat.getCurrencyInstance(new Locale("pt", "BR")).format(p.getPrecProduto());
         try {
-            CardView cardview = (CardView) LayoutInflater.from(getContext()).inflate(R.layout.cardview_product, mainLayout, false);
+            CardView cardview = (CardView) LayoutInflater.from(getActivity()).inflate(R.layout.cardview_product, mainLayout, false);
 
             TextView txtTitle = cardview.findViewById(R.id.etName);
             TextView txtMsg = cardview.findViewById(R.id.tvTitle);
@@ -120,8 +119,8 @@ public class ProductListFragment extends Fragment {
     }
 
     public void callApis() {
-        this.searchTerm = Util.searchTerm;
-        this.categoryId = Util.categoryId;
+        searchTerm = Util.searchTerm;
+        categoryId = Util.categoryId;
         mainLayout.removeAllViews();
 
 
@@ -129,15 +128,14 @@ public class ProductListFragment extends Fragment {
 
         Call<List<Product>> call = null;
 
-        if (searchTerm == null && categoryId == null) { // TODOS OS PRODUTOS
-            call = api.getAll();
-        } else if (searchTerm == null && categoryId != null) { // SOMENTE POR CATEGORIA
+
+        if (searchTerm == null && categoryId != null) { // SOMENTE POR CATEGORIA
             call = api.getByCategory(this.categoryId);
         } else if (searchTerm != null && categoryId == null) { // SOMENTE PELO NOME
             call = api.getByName(this.searchTerm);
         } else if (searchTerm != null && categoryId != null) { // PELO NOME E CATEGORIA
             call = api.getByNameAndCategoryId(this.searchTerm, this.categoryId);
-        }
+        }  else  call = api.getAll(); // todos
 
         call.enqueue(new Callback<List<Product>>() {
             @Override
@@ -150,7 +148,7 @@ public class ProductListFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
-                Util.showDialog("Erro de Conexão", "Erro", getContext());
+                Util.showToast("Erro de conexao",getContext());
                 t.printStackTrace();
             }
         });

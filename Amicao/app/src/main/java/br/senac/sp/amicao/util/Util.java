@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
@@ -47,6 +48,12 @@ public final class Util {
         builder.setPositiveButton("Ok", null);
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    public static void showToast(String message, Context context) {
+        Toast toast= Toast.makeText(context,message,Toast.LENGTH_SHORT);
+        toast.setMargin(50,50);
+        toast.show();
     }
 
     public static ImageLoaderConfiguration getImageLoaderConfig(Context context) {

@@ -43,7 +43,7 @@ public class CategoryListFragment extends Fragment {
             }
             @Override
             public void onFailure(Call<List<Category>> call, Throwable t) {
-                Util.showDialog("Erro de Conexão", "Erro", getActivity().getApplicationContext());
+                Util.showToast("Erro de Conexão", getContext());
                 t.printStackTrace();
             }
         });

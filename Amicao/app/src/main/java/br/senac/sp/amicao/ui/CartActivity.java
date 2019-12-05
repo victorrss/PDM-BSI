@@ -42,7 +42,7 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        mainLayout = findViewById(R.id.productListMainLayout);
+        mainLayout = findViewById(R.id.cartListMainLayout);
         tvTotalPrice = findViewById(R.id.tvTitle);
         btnFinalize = findViewById(R.id.btnFinalize);
 
