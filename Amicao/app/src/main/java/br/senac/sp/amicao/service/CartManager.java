@@ -1,21 +1,26 @@
-package br.senac.sp.amicao.model;
+package br.senac.sp.amicao.service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class Cart {
-    private static Cart INSTANCE;
+import br.senac.sp.amicao.model.ItemCart;
+
+public final class CartManager {
+    private static CartManager INSTANCE;
     private static List<ItemCart> items = new ArrayList<>();
 
-    private Cart() {
+    private CartManager() {
     }
 
-    public static synchronized Cart getInstance() {
+    public static synchronized CartManager getInstance() {
         if (INSTANCE == null)
-            INSTANCE = new Cart();
+            INSTANCE = new CartManager();
         return INSTANCE;
     }
 
+    public void clearItems(){
+        items = new ArrayList<>();
+    }
     public void add(ItemCart item) throws Exception {
         if (existsInCart(item))
             throw new Exception("Este produto já foi adicionado no carrinho!");

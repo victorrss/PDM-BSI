@@ -41,10 +41,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         mainLayout = findViewById(R.id.productListMainLayout);
 
-        final Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Util.URL_API)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        final Retrofit retrofit = Util.getRetrofit();
 
         ApiProduct api = retrofit.create(ApiProduct.class);
         Call<Product> call = api.get(id);

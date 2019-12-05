@@ -12,20 +12,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
-            android:parentActivityName=".ui.MainActivity"
+            android:name=".ui.RegisterActivity"
+            android:label="Criar conta"
+            android:parentActivityName=".ui.MainActivity" />
+        <activity
+            android:name=".ui.OrderDetailActivity"
+            android:label="Detalhes da compra"
+            android:parentActivityName=".ui.MainActivity" />
+        <activity
+            android:name=".ui.LoginActivity"
+            android:label="Login"
+            android:parentActivityName=".ui.MainActivity" />
+        <activity
+            android:name=".ui.AboutActivity"
+            android:label="Sobre"
+            android:parentActivityName=".ui.MainActivity" />
+        <activity
             android:name=".ui.CartActivity"
             android:label="Carrinho"
-            >
-        </activity>
-
+            android:parentActivityName=".ui.MainActivity" />
         <activity
             android:name=".ui.ProductDetailActivity"
-            android:parentActivityName=".ui.MainActivity"
-            >
-        </activity>
-
+            android:label="Detalhe do produto"
+            android:parentActivityName=".ui.MainActivity" />
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,7 +43,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

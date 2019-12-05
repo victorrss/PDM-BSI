@@ -1,6 +1,5 @@
 package br.senac.sp.amicao.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
@@ -9,27 +8,17 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-
-import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
 
 import br.senac.sp.amicao.R;
 import br.senac.sp.amicao.api.ApiCategory;
-import br.senac.sp.amicao.api.ApiProduct;
 import br.senac.sp.amicao.model.Category;
-import br.senac.sp.amicao.model.Product;
 import br.senac.sp.amicao.util.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CategoryListFragment extends Fragment {
     private ViewGroup mainLayout;
@@ -64,7 +53,7 @@ public class CategoryListFragment extends Fragment {
     private void addCard(String title, final Integer id) {
         CardView cardview = (CardView) LayoutInflater.from(getContext()).inflate(R.layout.cardview_category, mainLayout, false);
 
-        TextView txtTitle = cardview.findViewById(R.id.txtNome);
+        TextView txtTitle = cardview.findViewById(R.id.etName);
         txtTitle.setText(title);
 
         cardview.setOnClickListener(new View.OnClickListener() {

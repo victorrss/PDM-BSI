@@ -6,13 +6,28 @@
         <item
             android:id="@+id/action_product_list"
             android:checked="false"
-            android:icon="@drawable/ic_view_list_foreground"
+            android:icon="@drawable/ic_apps_24dp"
             android:title="Produtos" />
         <item
             android:id="@+id/action_cart"
             android:checked="false"
-            android:icon="@drawable/ic_add_shopping_cart_black_24dp"
+            android:icon="@drawable/ic_shopping_cart_24dp"
             android:title="Carrinho" />
+        <item
+            android:id="@+id/action_orders"
+            android:checked="false"
+            android:icon="@drawable/ic_shopping_basket_24dp"
+            android:title="Minhas compras" />
+        <item
+            android:id="@+id/action_about"
+            android:checked="false"
+            android:icon="@drawable/ic_info_24dp"
+            android:title="Sobre" />
+        <item
+            android:id="@+id/action_login_logout"
+            android:checked="false"
+            android:icon="@drawable/ic_exit_to_app_24dp"
+            android:title="Login/Logout" />
     </group>
 
 </menu>

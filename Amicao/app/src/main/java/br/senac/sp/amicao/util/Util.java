@@ -17,6 +17,7 @@ import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+import br.senac.sp.amicao.model.Customer;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -24,6 +25,7 @@ public final class Util {
     public static String URL_API = "https://oficinacordova.azurewebsites.net/";
     public static String searchTerm = null;
     public static Integer categoryId = null;
+    public static Customer customerLoggedIn = null;
 
     public static Integer toInteger(String s) {
         try {
@@ -37,9 +39,9 @@ public final class Util {
         return NumberFormat.getCurrencyInstance(new Locale("pt", "BR")).format(d);
     }
 
-    public static void showDialog(String val, String title, Context context) {
+    public static void showDialog(String message, String title, Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage(val);
+        builder.setMessage(message);
         builder.setTitle(title);
         builder.setCancelable(false);
         builder.setPositiveButton("Ok", null);
@@ -73,4 +75,10 @@ public final class Util {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
+
+    public static SharedPreferences getPreference(Context context){
+        SharedPreferences pref = context.getSharedPreferences("settingsDefault", context.MODE_PRIVATE);
+        return pref;
+    }
+
 }

@@ -24,7 +24,7 @@ import java.util.Locale;
 import br.senac.sp.amicao.R;
 import br.senac.sp.amicao.api.ApiCategory;
 import br.senac.sp.amicao.api.ApiProduct;
-import br.senac.sp.amicao.model.Cart;
+import br.senac.sp.amicao.service.CartManager;
 import br.senac.sp.amicao.model.Category;
 import br.senac.sp.amicao.model.ItemCart;
 import br.senac.sp.amicao.model.Product;
@@ -55,7 +55,7 @@ public class ProductListFragment extends Fragment {
 
         mainLayout = view.findViewById(R.id.productListMainLayout);
         layoutFilter = view.findViewById(R.id.layoutFilter);
-        tvFilterCategory = view.findViewById(R.id.tvTotalPrice);
+        tvFilterCategory = view.findViewById(R.id.tvTitle);
         btnFilterClear = view.findViewById(R.id.btnFinalize);
 
         SearchView searchView =view.findViewById(R.id.search_view);
@@ -76,8 +76,8 @@ public class ProductListFragment extends Fragment {
         try {
             CardView cardview = (CardView) LayoutInflater.from(getContext()).inflate(R.layout.cardview_product, mainLayout, false);
 
-            TextView txtTitle = cardview.findViewById(R.id.txtNome);
-            TextView txtMsg = cardview.findViewById(R.id.txtPreco);
+            TextView txtTitle = cardview.findViewById(R.id.etName);
+            TextView txtMsg = cardview.findViewById(R.id.tvTitle);
             ImageView btnAddCart = cardview.findViewById(R.id.btnAddCart);
 
             txtTitle.setText(p.getNomeProduto() == null ? "" : p.getNomeProduto());
@@ -103,7 +103,7 @@ public class ProductListFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     try {
-                        Cart.getInstance().add(new ItemCart(p));
+                        CartManager.getInstance().add(new ItemCart(p));
                         Util.showDialog("Produto adicionado com sucesso","Hurra!",getContext());
                     } catch (Exception e){
                         Util.showDialog(e.getMessage(),"Ops!",getContext());

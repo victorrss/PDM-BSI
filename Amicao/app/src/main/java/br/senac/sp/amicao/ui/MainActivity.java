@@ -1,6 +1,7 @@
 package br.senac.sp.amicao.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -23,6 +23,14 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private ProductListFragment f;
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        ProductListFragment f = new ProductListFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frag_container, f).commit();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,12 +68,31 @@ public class MainActivity extends AppCompatActivity {
                                 .replace(R.id.frag_container, f).commit();
                         return true;
                     case R.id.action_cart:
-                        Intent i = new Intent(getApplicationContext(), CartActivity.class);
-                        startActivity(i);
+                        startActivity(new Intent(getApplicationContext(), CartActivity.class));
+                        return true;
+                    case R.id.action_orders:
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.frag_container, new OrderListFragment()).commit();
+                        return true;
+                    case R.id.action_about:
+                        startActivity(new Intent(getApplicationContext(), AboutActivity.class));
+                        return true;
+                    case R.id.action_login_logout:
+                        if (Util.getPreference(getApplicationContext()).getBoolean("isLoggedIn", false) ==  true){
+                            Util.customerLoggedIn = null;
+                            SharedPreferences.Editor editor = Util.getPreference(getApplicationContext()).edit();
+                            editor.putBoolean("isLoggedIn", false);
+                            editor.putInt("currentCustomerId",0);
+                            editor.apply();
+                            Util.showDialog("Logout efetuado com sucesso!", "Logout",MainActivity.this);
+                        } else {
+                            Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                            i.putExtra("classBack", "main");
+                            startActivityForResult(i, 1);
+                        }
                         return true;
                 }
                 return false;
-
             }
         });
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.openDrawer, R.string.closeDrawer);
